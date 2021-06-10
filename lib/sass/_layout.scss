@@ -1,0 +1,32 @@
+
+#infoPaneBg{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+    opacity: 0;
+    display: flex;
+    transition: all .4s ease-out;
+}
+
+.is-infoPaneBg-visible{
+    opacity: 1 !important;
+    z-index: 1 !important;
+    transition: opacity .6s ease-in !important;
+}
+
+#ptable{
+    max-width: 1260px;
+    display: grid;
+    margin: 80px auto;
+    font-size: .5rem;
+    grid-template-columns: repeat(18,1fr);
+}
+
+.l-no-wrap{
+	white-space: nowrap;
+}

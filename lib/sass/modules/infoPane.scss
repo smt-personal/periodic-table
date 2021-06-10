@@ -1,0 +1,46 @@
+.infoPane{
+    background-color: #fff;
+    padding: 2em;
+    border: double 10px #333;
+    max-width: 450px;
+    line-height: 1.4em;
+
+    &--close-btn{
+        float: right;
+        cursor: pointer;
+        font-size: 1.4em;
+        transition: color .3s ease-in;
+    }
+
+    &--close-btn:hover{
+        color: #777;
+        transition-timing-function: ease-out;
+    }
+
+    &--list-item{
+        margin-bottom:5px;
+    }
+
+    &--label{
+        text-transform: capitalize;
+        font-weight: 700;
+    }
+
+    &--h1{
+        font-size: 2rem
+    }
+
+    &--h2{
+        font-size: 1.5rem;
+        margin: 20px 0 10px;
+    }
+
+    &--anchor{
+        color: orangered;
+        text-decoration: none;
+    }
+    
+    &--anchor:hover{
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,85 @@
+.element{
+	border: solid 1px #222;
+	padding: .5em;
+	font-size: 2em;
+	cursor: pointer;
+	transition: filter .2s ease-in;
+
+	&:hover{
+		filter: brightness(60%);
+	}
+
+	&::before {
+		content: attr(data-idx);
+		font-size: .5em;
+		display: block;
+	}
+
+	&::after {
+		content: attr(data-name) '\A' attr(data-weight);
+		white-space: pre-wrap;
+		font-size: .5em;
+		display: block;
+	}
+
+	&--noble-gas{
+	    background-color: lemonchiffon
+	}
+
+	&--alkali-metal{
+	    background-color: powderblue;
+	}
+
+	&--alkaline-earth-metal{
+	    background-color: lightskyblue
+	}
+
+	&--diatomic-nonmetal{
+	    background-color: lightcoral
+	}
+
+	&--metalloid{
+	    background-color: lightsalmon
+	}
+
+	&--polyatomic-nonmetal{
+	    background-color: indianred
+	}
+
+	&--post-transition-metal{
+	    background-color: lightpink
+	}
+
+	&--unknown-probably-post-transition-metal{
+	    background-color: orange
+	}
+
+	&--transition-metal{
+	    background-color: lightgreen
+	}
+
+	&--unknown-probably-transition-metal{
+	    background-color: green
+	}
+
+	&--lanthanide{
+	    background-color: thistle
+	}
+
+	&--actinide{
+	    background-color: darkseagreen
+	}
+
+	&--unknown-probably-metalloid{
+	    background-color: cornflowerblue
+	}
+
+	&--unknown-predicted-to-be-noble-gas{
+	    background-color: aquamarine
+	}
+
+	&--unknown-but-predicted-to-be-an-alkali-metal{
+	    background-color: lightseagreen
+	}
+}
+

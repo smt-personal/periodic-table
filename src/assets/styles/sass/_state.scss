@@ -1,0 +1,14 @@
+
+.is-visible
+{
+  opacity: 1 !important;
+  z-index: 1 !important;
+  transition: z-index 2s ease-out;
+}
+
+.is-showing
+{
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 2 !important;
+}
+

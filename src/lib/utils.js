@@ -1,4 +1,7 @@
-
+const elementTemplate = require('./../assets/mustache-templates/element.html')
+const infoPaneTemplate = require('./../assets/mustache-templates/info-pane.html')
+const infoPaneListItem = require('./../assets/mustache-templates/info-pane-list-item.html')
+const infoPaneWikiLinkListItem = require('./../assets/mustache-templates/info-pane-wiki-link-list-item.html')
 
 export function formatJson(json)
 {
@@ -15,16 +18,17 @@ export function createHtmlElements(json)
 {
 	return json.map((el,idx) => 
 	{
-		let modifier = el.category.split(" ").join("-").replace(/,/g, '')
-		return `
-			<div 
-				class='element element--${modifier}' 
-				data-idx=${idx+1}
-				data-weight='${el.atomic_mass}'
-				style='grid-column: ${el.xpos}/${el.xpos+1}; grid-row: ${el.ypos}/${el.ypos+1}' 
-				data-name='${el.name}' 
-			>${el.symbol}</div>`
-
+		return elementTemplate({ 
+			symbol: el.symbol,
+			category: el.category.split(' ').join('-').replace(/,/g, ''),
+			idx: idx+1,
+			atomic_mass: el.atomic_mass,
+			gridColFrom: el.xpos,
+			gridColTo: el.xpos++, 
+			gridRowFrom: el.ypos,
+			gridRowTo: el.ypos++,
+			name: el.name
+		})
 	}).join('')
 }
 
@@ -32,49 +36,50 @@ export function createInfoPane(element)
 {
 	const arr = ['phase','category','discovered_by','named_by']
 
-	let tpl = `
-		<ul class='infoPane--list'>
-			<li class='infoPane--list-item'>
-				<h1 class='infoPane--h1'>${element['name']}</h1>
-			</li>
-			<li class='infoPane--list-item'>
-				<h2 class='infoPane--h2'>${element['symbol']}</h2>
-			</li>
-			<li class='infoPane--list-item'>
-				<span class='infoPane--val'>${element['summary']}</span>
-			</li>`
+	let tpl = infoPaneTemplate({
+		name: element['name'],
+		symbol: element['symbol'],
+		summary: element['summary']
+	})
 
-	tpl += arr.map(pr_nm => 
+	let cats = arr.map(category => 
 	{
-		return `
-			<li class='infoPane--list-item l-no-wrap'>
-				<span class='infoPane--label'>${pr_nm.split('_').join(' ')}:</span>
-	 			<span class='infoPane--val'>${element[pr_nm] ? element[pr_nm] : 'unknown'}</span>
-	 		</li>`
+		const name = category.split('_').join(' ')
+		const value = element[category] ? element[category] : 'unknown'
+		return infoPaneListItem({name: name, value: value})
 	}).join('')
 	
-	tpl += `
-			<li class='infoPane--list-item'>
-				<a target='_blank' class='infoPane--anchor' href='${element['source']}'>${element['source']}</a>
-			</li>
-		</ul>`
+	const wikiLinkListItem = infoPaneWikiLinkListItem({
+		href: element['source'],
+		linkName: element['source']
+	})
+		
+	document.body.insertAdjacentHTML('beforeend', tpl)
+	document.querySelector('.info-pane--list').insertAdjacentHTML('beforeend', cats)
+	document.querySelector('.info-pane--list').insertAdjacentHTML('beforeend', wikiLinkListItem)
 
-	let ipList = document.querySelector('.infoPane--list')
-	
-	if(ipList)
-	{
-		document.querySelector('.infoPane--list').remove()
-	}
-
-	document.querySelector('.infoPane').insertAdjacentHTML('beforeend', tpl)
-	document.body.classList += 'is-body-backdrop'
-	document.getElementById('infoPaneBg').classList += 'is-infoPaneBg-visible'
+	_showHideInfoPane(true)
 }
 
 export function destroyInfoPane()
 {
-	document.body.classList = ''
-	document.getElementById('infoPaneBg').classList = ''
+	document.querySelector('.info-pane--list').innerHTML = ''
+	_showHideInfoPane(false)
+}
+
+function _showHideInfoPane(show)
+{
+	if(show)
+	{
+		document.querySelector('.info-pane--background').classList.add('is-showing')
+		document.querySelector('.info-pane').classList.add('is-visible')	
+	}
+	else
+	{
+		document.querySelector('.info-pane--background').classList.remove('is-showing')
+		document.querySelector('.info-pane').classList.remove('is-visible')
+	}
+	
 }
 
 

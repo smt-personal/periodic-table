@@ -1,0 +1,13 @@
+#ptable
+{
+    max-width: 1260px;
+    display: grid;
+    margin: 80px auto;
+    font-size: .5rem;
+    grid-template-columns: repeat(18,1fr);
+}
+
+.l-no-wrap
+{
+	white-space: nowrap;
+}
